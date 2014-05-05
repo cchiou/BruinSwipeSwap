@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="152dp"
+        android:layout_height="221dp"
+        android:contentDescription="@string/login_icon_desc"
+        android:src="@drawable/ic_launcher"
+        android:layout_gravity="center" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/EditInfo_imageView"
+        android:src="@drawable/ic_action_edit"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Edit User Info"
+        android:id="@+id/textView2"
+        android:layout_gravity="center_horizontal" />
+
+    <EditText
+        android:id="@+id/edituser_editText_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/new_name"
+        android:ems="20"
+        android:gravity="center" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/edituser_editText_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="20"
+        android:hint="@string/new_number"
+        android:inputType="phone"
+        android:gravity="center" />
+
+    <Button
+        android:id="@+id/edituser_update_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/update_button"
+        />
+
+    <Button
+        android:id="@+id/edituser_cancel_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel_button"
+        />
+
+</LinearLayout>

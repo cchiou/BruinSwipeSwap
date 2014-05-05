@@ -21,9 +21,13 @@
     <string name="password">Password</string>
     <string name="register_account">Register for an account</string>
     <string name="login_icon_desc">Bruin SwipeSwap Logo</string>
-    
+
+    <!-- TODO: later have these grab previous value from database -->
     <!-- Edit User -->
-    
+    <string name="update_button">Update</string>
+    <string name="new_name">Name</string>
+    <string name="new_number">Number</string>
+
     <!-- Home Page -->
     <string name="offer_swipes_button">Offer Swipes</string>
     <string name="request_swipes_button">Request Swipes</string>
