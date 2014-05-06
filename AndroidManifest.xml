@@ -26,6 +26,18 @@
             android:name="com.example.bruinswipeswap.Home"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="com.example.bruinswipeswap.EditUser"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.example.bruinswipeswap.OfferSwipe"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.example.bruinswipeswap.RequestSwipe"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>
