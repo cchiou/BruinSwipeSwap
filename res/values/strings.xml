@@ -15,11 +15,13 @@
     <string name="user_number">123-456-7890</string>
     <string name="number_offers">1</string>
     <string name="number_requests">2</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_refresh">Refresh</string>
     
     <!-- Log In -->
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="register_account">Register for an account</string>
+    <string name="register_account"><u>Register for an account</u></string>
     <string name="login_icon_desc">Bruin SwipeSwap Logo</string>
 
     <!-- TODO: later have these grab previous value from database -->

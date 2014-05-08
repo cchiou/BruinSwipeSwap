@@ -1,26 +1,51 @@
 package com.example.bruinswipeswap;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+import android.support.v7.app.ActionBarActivity;
 
-public class Home extends Activity {
-	
+public class Home extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);            
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setDetailsString();
         addListenerOnButton();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    		// Inflate the menu items for use in the action bar
+    	    MenuInflater inflater = getMenuInflater();
+    	    inflater.inflate(R.menu.actions, menu);
+    	    return super.onCreateOptionsMenu(menu);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	final Context context = this;
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+            	Intent intent = new Intent(context, EditUser.class);
+                startActivity(intent);   
+            case R.id.action_refresh:
+                // add stuff
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    
     public void setDetailsString() {
     	String current_details = getString(R.string.current_details_1) + " " +
         		getString(R.string.number_offers) + " " + getString(R.string.current_details_2) +
@@ -34,19 +59,6 @@ public class Home extends Activity {
 	public void addListenerOnButton() {
 		 
 		final Context context = this;
- 
-		ImageButton edit_info_button = (ImageButton) findViewById(R.id.edit_info_button);
-		edit_info_button.setOnClickListener(new OnClickListener() {
- 
-			@Override
-			public void onClick(View v) {
- 
-			    Intent intent = new Intent(context, EditUser.class);
-                            startActivity(intent);   
- 
-			}
- 
-		});
 		
 		Button offer_swipe_button = (Button) findViewById(R.id.offer_swipes_button);
 		offer_swipe_button.setOnClickListener(new OnClickListener() {
@@ -55,7 +67,7 @@ public class Home extends Activity {
 			public void onClick(View v) {
  
 			    Intent intent = new Intent(context, OfferSwipe.class);
-                            startActivity(intent);   
+                            startActivity(intent);  
  
 			}
  

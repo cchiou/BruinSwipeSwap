@@ -17,4 +17,18 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="ButtonText">
+       <item name="android:textColor">#FFFFFF</item>
+       <item name="android:textSize">18sp</item>
+    </style>
+
+  <!--  <style name="text_singleline">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>-->
 </resources>
