@@ -18,6 +18,17 @@ public class Home extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        if (getIntent() != null && getIntent().getExtras() != null)
+        {
+            String m_name = getIntent().getExtras().getString("UPDATE_KEY_NAME");
+            String m_number = getIntent().getExtras().getString("UPDATE_KEY_NUMBER");
+            TextView tv_name = (TextView) findViewById(R.id.name_value);
+            TextView tv_number = (TextView) findViewById(R.id.number_value);
+            tv_name.setText(m_name);
+            tv_number.setText(m_number);
+        }
+
         setDetailsString();
         addListenerOnButton();
     }
