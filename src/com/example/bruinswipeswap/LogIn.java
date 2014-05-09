@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.view.View;
 import android.view.View.OnClickListener;
+import com.parse.Parse;
 
 public class LogIn extends Activity {
  
@@ -21,6 +22,7 @@ public class LogIn extends Activity {
 		addListenerOnLogInButton();
 		addListenerOnRegisterLink();
 		
+		Parse.initialize(this, "TknZnYwU5lvjuaiDftIATe6UMNpjsQD8EqiWPtwh", "OcxyFi2dFos1wGgezXh7Z2cdH0P5L4CUsffg2EK6");
 	}
  
 	public void addListenerOnLogInButton() {
