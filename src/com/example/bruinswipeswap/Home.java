@@ -18,17 +18,15 @@ public class Home extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        if (getIntent() != null && getIntent().getExtras() != null)
-        {
-            String m_name = getIntent().getExtras().getString("UPDATE_KEY_NAME");
-            String m_number = getIntent().getExtras().getString("UPDATE_KEY_NUMBER");
-            TextView tv_name = (TextView) findViewById(R.id.name_value);
-            TextView tv_number = (TextView) findViewById(R.id.number_value);
-            tv_name.setText(m_name);
-            tv_number.setText(m_number);
+        
+       if (getIntent() != null && getIntent().getExtras() != null) {
+        	 String m_name = getIntent().getExtras().getString("UPDATE_KEY_NAME");
+        	 String m_number = getIntent().getExtras().getString("UPDATE_KEY_NUMBER");
+        	 TextView tv_name = (TextView) findViewById(R.id.name_value);
+        	 TextView tv_number = (TextView) findViewById(R.id.number_value);
+        	 tv_name.setText(m_name);
+        	 tv_number.setText(m_number);
         }
-
         setDetailsString();
         addListenerOnButton();
     }
@@ -47,7 +45,17 @@ public class Home extends ActionBarActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_edit:
+    	        Bundle b = new Bundle();
+                TextView tv_name = (TextView) findViewById(R.id.name_value);
+                String s_name = tv_name.getText().toString();
+                b.putString("UPDATE_KEY_NAME", s_name);
+                	
+                TextView tv_number = (TextView) findViewById(R.id.number_value);
+                String s_number = tv_number.getText().toString();
+                b.putString("UPDATE_KEY_NUMBER", s_number);
+
             	Intent intent = new Intent(context, EditUser.class);
+            	intent.putExtras(b);
                 startActivity(intent);   
             case R.id.action_refresh:
                 // add stuff

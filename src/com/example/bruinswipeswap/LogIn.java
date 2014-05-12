@@ -28,7 +28,7 @@ public class LogIn extends Activity {
 	public void addListenerOnLogInButton() {
 		final Context context = this;
  
-		button = (Button) findViewById(R.id.login_submit_button);
+		button = (Button) findViewById(R.id.login_button);
 		button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -45,7 +45,7 @@ public class LogIn extends Activity {
 		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-			    Intent intent = new Intent(context, Home.class);
+			    Intent intent = new Intent(context, Register.class);
                             startActivity(intent);   
 			}
 		});
