@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 public class EditUser extends Activity {
 
@@ -41,18 +43,35 @@ public class EditUser extends Activity {
             @Override
             public void onClick(View arg0) {
 
-            	// Implements Edit
-    	        Bundle b = new Bundle();
+                // Implements Edit
+                Bundle b = new Bundle();
                 TextView tv_name = (TextView) findViewById(R.id.edituser_editText_name);
                 String s_name = tv_name.getText().toString();
                 b.putString("UPDATE_KEY_NAME", s_name);
-                	
+
                 TextView tv_number = (TextView) findViewById(R.id.edituser_editText_number);
                 String s_number = tv_number.getText().toString();
-                b.putString("UPDATE_KEY_NUMBER", s_number);
-                Intent intent = new Intent(context, Home.class);
-                intent.putExtras(b);
-                startActivity(intent);
+
+                String regex_number = "^(1\\-)?[0-9]{3}\\-?[0-9]{3}\\-?[0-9]{4}$";
+                if (!s_number.matches(regex_number)) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                    builder.setTitle("Invalid Phone Number").setMessage("XXXXXXXXXX, 1-XXX-XXX-XXXX, or XXX-XXX-XXXX Format Only");
+
+                    builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id){}
+                    });
+
+                    AlertDialog dialog = builder.create();
+
+                    dialog.show();
+                } else {
+
+                    b.putString("UPDATE_KEY_NUMBER", s_number);
+                    Intent intent = new Intent(context, Home.class);
+                    intent.putExtras(b);
+                    startActivity(intent);
+                }
             }
         });
 
