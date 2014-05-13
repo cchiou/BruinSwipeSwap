@@ -27,12 +27,12 @@ public class OfferSwipe extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.offerswipe);
         NumberPicker numberpicker = (NumberPicker)findViewById(R.id.numberPicker1);
-        String[] nums = new String[21];
+        String[] nums = new String[10];
         for(int i=0; i<nums.length; i++)
-               nums[i] = Integer.toString(i);
+               nums[i] = Integer.toString(i+1);
 
         numberpicker.setMinValue(0);
-        numberpicker.setMaxValue(20);
+        numberpicker.setMaxValue(9);
         numberpicker.setWrapSelectorWheel(false);
         numberpicker.setDisplayedValues(nums);
         numberpicker.setValue(0);

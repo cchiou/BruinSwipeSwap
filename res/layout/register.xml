@@ -5,6 +5,14 @@
     android:orientation="vertical"
     android:layout_margin="10dp" >
     
+   <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/EditInfo_imageView"
+        android:src="@drawable/ic_action_add_person"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="5dp" />
+   
     <EditText
         android:id="@+id/register_editText_name"
         android:layout_width="match_parent"
@@ -12,7 +20,8 @@
         android:ems="20"
         android:hint="@string/name"
         android:gravity="center"
-        android:layout_marginBottom="10dp">  
+        android:layout_marginBottom="10dp"
+        android:inputType="textCapWords" >  
         <requestFocus />
     </EditText>
 

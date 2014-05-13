@@ -7,6 +7,7 @@
     
     <!-- General -->
     <string name="login_button">Log in</string>
+    <string name="submit_button">Submit</string>
     <string name="save_button">Save</string>
     <string name="cancel_button">Cancel</string>
     <string name="name">Name</string>
@@ -36,8 +37,8 @@
     <string name="new_number">Number</string>
 
     <!-- Home Page -->
-    <string name="offer_swipes_button">Offer Swipes</string>
-    <string name="request_swipes_button">Request Swipes</string>
+    <string name="offer_swipes">Offer Swipes</string>
+    <string name="request_swipes">Request Swipes</string>
     <string name="no_match">No match found yet</string>
     <string name="view_match_button">View Match</string>
     <string name="current_details_1">Currently</string>
@@ -50,12 +51,15 @@
     <string name="match_name">Match name:</string>
     <string name="match_number">Match number:</string>
     <string name="amount">Amount:</string>
-    
-    <!-- Offer Swipe -->
-    <string name="available_until">Available until:</string>
-    
-    <!-- Request Swipe -->
     <string name="from">From:</string>
     <string name="to">To:</string>
+    
+    <!-- Offer Swipe -->
+    <string name="anytime_today">Anytime Today</string>
+    
+    <!-- Request Swipe -->
+    <string name="request_button">Request</string>
+    
+    
     
 </resources>

@@ -43,8 +43,7 @@
         android:text="@string/update_button"
         android:background="@drawable/blue_button"
         style="@style/ButtonText"
-        android:layout_marginBottom="8dp" 
-        />
+        android:layout_marginBottom="8dp" />
 
     <Button
         android:id="@+id/edituser_cancel_button"
