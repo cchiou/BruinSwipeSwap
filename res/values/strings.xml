@@ -42,8 +42,8 @@
     <string name="no_match">No match found yet</string>
     <string name="view_match_button">View Match</string>
     <string name="current_details_1">Currently</string>
-    <string name="current_details_2">user(s) offering swipes and</string>
-    <string name="current_details_3">user(s) requesting swipes.</string>
+    <string name="current_details_2">offer(s) and</string>
+    <string name="current_details_3">request(s)..</string>
     
     <!-- Offer/Request Swipe -->
     <string name="accept_button">Accept</string>

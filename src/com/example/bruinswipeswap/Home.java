@@ -2,6 +2,7 @@ package com.example.bruinswipeswap;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.widget.Button;
 import android.view.Menu;
@@ -71,7 +72,8 @@ public class Home extends ActionBarActivity {
         		" " + getString(R.string.number_requests) + " " + getString(R.string.current_details_3);
         
         TextView txt = new TextView(this);
-        txt = (TextView) findViewById(R.id.textView5);
+        txt = (TextView) findViewById(R.id.home_current_update);
+        txt.setTypeface(null, Typeface.ITALIC);
         txt.setText(current_details);
     }
     
