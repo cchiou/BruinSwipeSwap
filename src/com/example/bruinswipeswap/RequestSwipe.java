@@ -1,5 +1,8 @@
 package com.example.bruinswipeswap;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -10,9 +13,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TimePicker;
+
+import com.parse.Parse;
+import com.parse.ParseObject;
 
 public class RequestSwipe extends Activity {
 	Button request_button;
@@ -21,23 +26,41 @@ public class RequestSwipe extends Activity {
 	int from_time;
 	int until_time;
 	boolean anytimeToday;
+	NumberPicker numberpicker;
+	ParseObject p;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.requestswipe);
-        NumberPicker numberpicker = (NumberPicker)findViewById(R.id.numberPicker1);
-        String[] nums = new String[10];
-        for(int i=0; i<nums.length; i++)
-               nums[i] = Integer.toString(i+1);
+        numberpicker = (NumberPicker)findViewById(R.id.numberPicker1);
+        String[] numbers = new String[10];
+        for(int i=0; i<numbers.length; i++)
+               numbers[i] = Integer.toString(i);
 
+        
+        numberpicker.setWrapSelectorWheel(false);
+        numberpicker.setDisplayedValues(numbers);
+        numberpicker.setValue(0);
         numberpicker.setMinValue(0);
         numberpicker.setMaxValue(9);
-        numberpicker.setWrapSelectorWheel(false);
-        numberpicker.setDisplayedValues(nums);
-        numberpicker.setValue(0);
         num_requests = numberpicker.getValue();
+        
+        TimePicker timepicker1 = (TimePicker)findViewById(R.id.timePicker1);
+        timepicker1.setCurrentMinute(0);
+        timepicker1.setCurrentHour(12);
+        
+        TimePicker timepicker2 = (TimePicker)findViewById(R.id.timePicker2);
+        timepicker2.setCurrentMinute(0);
+        timepicker2.setCurrentHour(12);
+        
+        Parse.initialize(this, "TknZnYwU5lvjuaiDftIATe6UMNpjsQD8EqiWPtwh", "OcxyFi2dFos1wGgezXh7Z2cdH0P5L4CUsffg2EK6");
+        p = new ParseObject("Requests");
+		
+		
+        
         addListenerOnButton();
+        p.saveInBackground();
     }
 	public void addListenerOnButton() {
 		 
@@ -49,12 +72,20 @@ public class RequestSwipe extends Activity {
 			@Override
 			public void onClick(View v) {
 				TimePicker timepicker = (TimePicker) findViewById(R.id.timePicker1);
+				Calendar c1 = Calendar.getInstance();
+				c1.set(Calendar.HOUR_OF_DAY, timepicker.getCurrentHour()-7);
+				c1.set(Calendar.MINUTE, timepicker.getCurrentMinute());
+				Date time1 = c1.getTime();
 				int hour = timepicker.getCurrentHour();
 				int minute = timepicker.getCurrentMinute();
 				from_time = Integer.parseInt(Integer.toString(hour) + Integer.toString(minute));
 				
 				
 				TimePicker timepicker2 = (TimePicker) findViewById(R.id.timePicker2);
+				Calendar c2 = Calendar.getInstance();
+				c2.set(Calendar.HOUR_OF_DAY, timepicker2.getCurrentHour()-7);
+				c2.set(Calendar.MINUTE, timepicker2.getCurrentMinute());
+				Date time2 = c2.getTime();
 				int hour2 = timepicker2.getCurrentHour();
 				int minute2 = timepicker2.getCurrentMinute();
 				until_time = Integer.parseInt(Integer.toString(hour2) + Integer.toString(minute2));
@@ -78,7 +109,12 @@ public class RequestSwipe extends Activity {
 				        if(checkBox.isChecked()){
 				        	anytimeToday = true;
 				        }
-				        
+				        num_requests = numberpicker.getValue();
+				        p.put("numSwipes", num_requests); 
+						p.put("beginTime", (Date)time1);
+						p.put("endTime", (Date)time2);
+						p.put("anytimeToday", anytimeToday);
+						p.saveInBackground();
 				        Intent intent = new Intent(context, Home.class);
                             startActivity(intent);  
 				}

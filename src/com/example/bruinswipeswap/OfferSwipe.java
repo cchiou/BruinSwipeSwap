@@ -1,5 +1,8 @@
 package com.example.bruinswipeswap;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -13,7 +16,12 @@ import android.widget.CheckBox;
 import android.widget.NumberPicker;
 import android.widget.TimePicker;
 
-public class OfferSwipe extends Activity {
+import com.parse.Parse;
+import com.parse.ParseObject;
+
+
+
+public class OfferSwipe extends Activity  {
 	
 	Button offer_button;
 	Button cancel_button;
@@ -21,28 +29,50 @@ public class OfferSwipe extends Activity {
 	int from_time;
 	int until_time;
 	boolean anytimeToday;
+	NumberPicker numberpicker; 
+	ParseObject p;
+	
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.offerswipe);
-        NumberPicker numberpicker = (NumberPicker)findViewById(R.id.numberPicker1);
-        String[] nums = new String[10];
-        for(int i=0; i<nums.length; i++)
-               nums[i] = Integer.toString(i+1);
+        numberpicker = (NumberPicker)findViewById(R.id.numberPicker1);
+        String[] numbers = new String[10];
+        for(int i=0; i<numbers.length; i++)
+               numbers[i] = Integer.toString(i);
 
         numberpicker.setMinValue(0);
         numberpicker.setMaxValue(9);
         numberpicker.setWrapSelectorWheel(false);
-        numberpicker.setDisplayedValues(nums);
+        numberpicker.setDisplayedValues(numbers);
         numberpicker.setValue(0);
-        num_requests = numberpicker.getValue();
+        
+        
+        TimePicker timepicker1 = (TimePicker)findViewById(R.id.timePicker1);
+        timepicker1.setCurrentMinute(0);
+        timepicker1.setCurrentHour(12);
+        
+        TimePicker timepicker2 = (TimePicker)findViewById(R.id.timePicker2);
+        timepicker2.setCurrentMinute(0);
+        timepicker2.setCurrentHour(12);
+        
+        Parse.initialize(this, "TknZnYwU5lvjuaiDftIATe6UMNpjsQD8EqiWPtwh", "OcxyFi2dFos1wGgezXh7Z2cdH0P5L4CUsffg2EK6");
+        p = new ParseObject("Offers");
+		
+		
+        
         addListenerOnButton();
+        p.saveInBackground();
     }
+	 
+	
+	
+	
 	
 	public void addListenerOnButton() {
 		 
-final Context context = this;
+		final Context context = this;
 		
 		Button requestbutton = (Button) findViewById(R.id.offer_button);
 		requestbutton.setOnClickListener(new OnClickListener() {
@@ -50,16 +80,24 @@ final Context context = this;
 			@Override
 			public void onClick(View v) {
 				TimePicker timepicker = (TimePicker) findViewById(R.id.timePicker1);
+				Calendar c1 = Calendar.getInstance();
+				c1.set(Calendar.HOUR_OF_DAY, timepicker.getCurrentHour()-7);
+				c1.set(Calendar.MINUTE, timepicker.getCurrentMinute());
+				Date time1 = c1.getTime();
 				int hour = timepicker.getCurrentHour();
 				int minute = timepicker.getCurrentMinute();
 				//time is four digits, first two are the hours (0-23), second two are the minutes (0-59)
-				from_time = Integer.parseInt(Integer.toString(hour) + Integer.toString(minute));
-				
+				from_time = Integer.parseInt(String.format("%02d", hour) + "" + String.format("%02d", minute));
+				 
 				
 				TimePicker timepicker2 = (TimePicker) findViewById(R.id.timePicker2);
+				Calendar c2 = Calendar.getInstance();
+				c2.set(Calendar.HOUR_OF_DAY, timepicker2.getCurrentHour()-7);
+				c2.set(Calendar.MINUTE, timepicker2.getCurrentMinute());
+				Date time2 = c2.getTime();
 				int hour2 = timepicker2.getCurrentHour();
 				int minute2 = timepicker2.getCurrentMinute();
-				until_time = Integer.parseInt(Integer.toString(hour2) + Integer.toString(minute2));
+				until_time = Integer.parseInt(String.format("%02d", hour2) + "" + String.format("%02d", minute2));
 				
 				CheckBox checkBox = (CheckBox)findViewById(R.id.checkBox1);
 				if(checkBox.isChecked()){
@@ -72,20 +110,25 @@ final Context context = this;
 				    .setMessage("Please select a valid time range.")
 				    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 				        public void onClick(DialogInterface dialog, int which) { 
-				            // continue with selecting times
+				             // continue with selecting times
 				        }
 				     })
 				    .setIcon(android.R.drawable.ic_dialog_alert)
 				     .show();
 				}
 				else{
-					 
-				        
-				        
+					  
+					num_requests = numberpicker.getValue();
+					p.put("numSwipes", num_requests); 
+					p.put("beginTime", (Date)time1);
+					p.put("endTime", (Date)time2);
+					p.put("anytimeToday", anytimeToday);
+					p.saveInBackground();
+					//Need CONTACT INFO to go along with above 
 				        
 				        Intent intent = new Intent(context, Home.class);
                             startActivity(intent);  
-				}
+				} 
 			}
 		});
 		
@@ -98,9 +141,9 @@ final Context context = this;
 			    Intent intent = new Intent(context, Home.class);
                             startActivity(intent);   
  
-			}
- 
+			} 
 		});
 	}
+	
 	
 }
