@@ -15,8 +15,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.NumberPicker;
 import android.widget.TimePicker;
-
-import com.parse.Parse;
 import com.parse.ParseObject;
 
 public class RequestSwipe extends Activity {
@@ -54,7 +52,6 @@ public class RequestSwipe extends Activity {
         timepicker2.setCurrentMinute(0);
         timepicker2.setCurrentHour(12);
         
-        Parse.initialize(this, "TknZnYwU5lvjuaiDftIATe6UMNpjsQD8EqiWPtwh", "OcxyFi2dFos1wGgezXh7Z2cdH0P5L4CUsffg2EK6");
         p = new ParseObject("Requests");
 		
 		

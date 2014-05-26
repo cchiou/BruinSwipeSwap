@@ -1,14 +1,20 @@
 package com.example.bruinswipeswap;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.widget.TextView;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.view.View;
 import android.view.View.OnClickListener;
-import com.parse.Parse;
+
+
+import com.parse.LogInCallback;
+import com.parse.ParseUser;
+import com.parse.ParseException;
 
 public class LogIn extends Activity {
  
@@ -20,9 +26,7 @@ public class LogIn extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 		addListenerOnLogInButton();
-		addListenerOnRegisterLink();
-		
-		Parse.initialize(this, "TknZnYwU5lvjuaiDftIATe6UMNpjsQD8EqiWPtwh", "OcxyFi2dFos1wGgezXh7Z2cdH0P5L4CUsffg2EK6");
+		addListenerOnRegisterLink();		
 	}
  
 	public void addListenerOnLogInButton() {
@@ -32,8 +36,40 @@ public class LogIn extends Activity {
 		button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-			    Intent intent = new Intent(context, Home.class);
-                            startActivity(intent);   
+				TextView tv_email = (TextView) findViewById(R.id.login_editText_email);
+				TextView tv_password = (TextView) findViewById(R.id.login_editText_password);
+				
+				// COMMENT THIS SECTION TO SKIP TESTING LOGIN
+				// /*
+				ParseUser.logInInBackground(tv_email.getText().toString(), tv_password.getText().toString(), new LogInCallback() {
+					public void done (ParseUser user, ParseException e) {
+						if (user != null) {
+							Intent intent = new Intent(context, Home.class);
+                            startActivity(intent);
+						}
+						else {
+		                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+		                    builder.setTitle("Log In Failed").setMessage("Check your username/password and try again.");
+
+		                    builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+		                    public void onClick(DialogInterface dialog, int id){}
+		                    });
+
+		                    AlertDialog dialog = builder.create();
+
+		                    dialog.show();
+						}
+					}
+				});
+				// */
+				
+				
+				// FOR DEBUGGING PURPOSES USE THIS FOR EASIER ACCESS
+				/*
+				Intent intent = new Intent(context, Home.class);
+                startActivity(intent);
+                */
 			}
 		});
 	}
@@ -46,7 +82,7 @@ public class LogIn extends Activity {
 			@Override
 			public void onClick(View arg0) {
 			    Intent intent = new Intent(context, Register.class);
-                            startActivity(intent);   
+                startActivity(intent);   
 			}
 		});
 	}
