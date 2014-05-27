@@ -17,9 +17,6 @@ import android.content.DialogInterface;
 import com.parse.ParseUser;
 
 public class EditUser extends Activity {
-	
-	ParseUser p;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,13 +69,11 @@ public class EditUser extends Activity {
                 } else {
                     b.putString("UPDATE_KEY_NUMBER", s_number);
 
-                    // TODO: getCurrentUser to find key
-                	String key = "miaALUqeID";
-                	
-                	if (p.getParseUser(key) != null){
-                		p.put("username", s_name);
-                		p.put("username", s_number);
-                		p.saveInBackground();
+                    ParseUser currentUser = ParseUser.getCurrentUser();                	
+                	if (currentUser != null){
+                		currentUser.put("name", s_name);
+                		currentUser.put("number", s_number);
+                		currentUser.saveInBackground();
                 	}
                     
                     Intent intent = new Intent(context, Home.class);
