@@ -2,6 +2,7 @@ package com.example.bruinswipeswap;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -9,13 +10,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.NumberPicker;
 import android.widget.TimePicker;
+
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 
 
@@ -84,7 +91,7 @@ public class OfferSwipe extends Activity  {
 				int minute = timepicker.getCurrentMinute();
 				//time is four digits, first two are the hours (0-23), second two are the minutes (0-59)
 				from_time = Integer.parseInt(String.format("%02d", hour) + "" + String.format("%02d", minute));
-				 
+				
 				
 				TimePicker timepicker2 = (TimePicker) findViewById(R.id.timePicker2);
 				Calendar c2 = Calendar.getInstance();
@@ -94,13 +101,50 @@ public class OfferSwipe extends Activity  {
 				int hour2 = timepicker2.getCurrentHour();
 				int minute2 = timepicker2.getCurrentMinute();
 				until_time = Integer.parseInt(String.format("%02d", hour2) + "" + String.format("%02d", minute2));
+				num_requests = numberpicker.getValue();
+				
+				
+				ParseQuery<ParseObject> query = ParseQuery.getQuery("Offers");
+				query.whereEqualTo("userId", (String) ParseUser.getCurrentUser().getUsername());
+				
+				int size=0;
+				try {
+					size=query.count();
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 				CheckBox checkBox = (CheckBox)findViewById(R.id.checkBox1);
 				if(checkBox.isChecked()){
 		        	anytimeToday = true;
 		        }
 				
-				if(from_time > until_time && anytimeToday == false)
+				if(size >=3)
+				{
+					new AlertDialog.Builder(context).setTitle("Exceeded Three Maximum Offers")
+				    .setMessage("Please delete previous offer(s) to continue!")
+				    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				        public void onClick(DialogInterface dialog, int which) { 
+				             // continue with selecting times
+				        }
+				     })
+				    .setIcon(android.R.drawable.ic_dialog_alert)
+				     .show();
+				}
+				else if(num_requests == 0){
+					new AlertDialog.Builder(context).setTitle("Invalid Number of Swipes")
+				    .setMessage("Please enter number of swipes!")
+				    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				        public void onClick(DialogInterface dialog, int which) { 
+				             // continue with selecting times
+				        }
+				     })
+				    .setIcon(android.R.drawable.ic_dialog_alert)
+				     .show();
+				}
+				
+				else if(from_time > until_time && anytimeToday == false)
 				{
 					new AlertDialog.Builder(context).setTitle("Time Error")
 				    .setMessage("Please select a valid time range.")
@@ -113,15 +157,17 @@ public class OfferSwipe extends Activity  {
 				     .show();
 				}
 				else{
-					  
-					num_requests = numberpicker.getValue();
+					
+					
 					p.put("numSwipes", num_requests); 
 					p.put("beginTime", (Date)time1);
 					p.put("endTime", (Date)time2);
 					p.put("anytimeToday", anytimeToday);
+					
+					p.put("userId", (String) ParseUser.getCurrentUser().getUsername());
 					p.saveInBackground();
-					//Need CONTACT INFO to go along with above 
-				        
+					
+					
 				        Intent intent = new Intent(context, Home.class);
                             startActivity(intent);  
 				} 
