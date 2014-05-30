@@ -49,7 +49,7 @@
         android:id="@+id/edituser_cancel_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/cancel_button"
+        android:text="@string/cancel"
         android:background="@drawable/gray_button"
         />
 

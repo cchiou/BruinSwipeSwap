@@ -9,15 +9,12 @@
     <string name="login_button">Log in</string>
     <string name="submit_button">Submit</string>
     <string name="save_button">Save</string>
-    <string name="cancel_button">Cancel</string>
+    <string name="cancel">Cancel</string>
     <string name="name">Name</string>
     <string name="number">Number</string>
-    <string name="user_full_name">Joe Bruin</string>
-    <string name="user_number">123-456-7890</string>
-    <string name="number_offers">1</string>
-    <string name="number_requests">2</string>
     <string name="action_edit">Edit</string>
     <string name="action_refresh">Refresh</string>
+    <string name="action_logout">Log out</string>
     <string name="email">UCLA Email</string>
     <string name="password">Password</string>
     
@@ -29,7 +26,6 @@
     <string name="register_account"><u>Register for an account</u></string>
     <string name="login_icon_desc">Bruin SwipeSwap Logo</string>
 
-    <!-- TODO: later have these grab previous value from database -->
     <!-- Edit User -->
     <string name="edit_user">Edit User</string>
     <string name="update_button">Update</string>

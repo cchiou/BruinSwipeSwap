@@ -46,14 +46,14 @@
             android:layout_height="100dp" />
 
 	</TableRow>
-	
+
 	<TableRow
         android:id="@+id/tableRow3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:layout_marginBottom="-10dp" >
-        
+
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
@@ -65,9 +65,9 @@
             android:id="@+id/timePicker2"
             android:layout_width="fill_parent"
             android:layout_height="100dp" />
-        
+
     </TableRow>
-    
+
     <CheckBox
         android:id="@+id/checkBox1"
         android:layout_width="wrap_content"
@@ -89,7 +89,7 @@
         android:id="@+id/cancel_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/cancel_button"
+        android:text="@string/cancel"
         android:background="@drawable/gray_button" />
 
 </TableLayout>

@@ -20,7 +20,8 @@
         android:hint="@string/email"
         android:ems="20"
         android:layout_marginBottom="5dp"
-        android:gravity="center" >
+        android:gravity="center"
+        android:inputType="textEmailAddress">
 
         <requestFocus />
     </EditText>
@@ -42,8 +43,7 @@
         android:layout_height="wrap_content"
         android:text="@string/login_button"
         style="@style/ButtonText"
-        android:layout_marginBottom="10dp"
-         />
+        android:layout_marginBottom="10dp" />
 
     <TextView
         android:id="@+id/login_textView_register"
@@ -52,7 +52,6 @@
         android:text="@string/register_account"
         android:gravity="center"
         android:ems="15"
-        android:textColor="@drawable/text_link"
-        />
+        android:textColor="@drawable/text_link" />
  
 </LinearLayout>
