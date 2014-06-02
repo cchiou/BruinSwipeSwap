@@ -32,7 +32,7 @@
         android:hint="@string/number"
         android:ems="20"
         android:gravity="center"
-        android:inputType="number"
+        android:inputType="phone"
         android:layout_marginBottom="10dp" />
     <EditText
         android:id="@+id/register_editText_email"

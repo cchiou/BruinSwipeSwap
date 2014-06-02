@@ -40,54 +40,114 @@ public class Register extends Activity {
             	tv_password = (TextView) findViewById(R.id.register_editText_password);
             	tv_password2 = (TextView) findViewById(R.id.register_editText_confirm_password);
             	
-            	if (tv_password.getText().toString().equals(tv_password2.getText().toString())){
-                	ParseUser new_user = new ParseUser();
-            		new_user.setUsername(tv_email.getText().toString());
-            		new_user.setPassword(tv_password.getText().toString());
-            		new_user.setEmail(tv_email.getText().toString());
-            		new_user.put("name", tv_name.getText().toString());
-            		new_user.put("number", tv_number.getText().toString());
-            		
-            		new_user.signUpInBackground(new SignUpCallback() {
-            			@Override
-            			public void done(ParseException e){
-            				if (e == null)
-            				{
-            	                Intent intent = new Intent(context, Home.class);
-            	                startActivity(intent);
-            				}
-            				else
-            				{
-            					AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-                                builder.setTitle("Parse Input Failed");
-
-                                builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id){}
-                                });
-
-                                AlertDialog dialog = builder.create();
-
-                                dialog.show();
-            				}
-            			}
-            		});
-            	}
-            	else
-            	{
-            		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-                    builder.setTitle("Password Confirmation Failed");
-
-                    builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id){}
-                    });
-
-                    AlertDialog dialog = builder.create();
-
-                    dialog.show();
-            	}
+            	String s_name, s_number, s_email, s_password, s_password2;
+            	s_name = tv_name.getText().toString();
+            	s_number = tv_number.getText().toString();
+            	s_email = tv_email.getText().toString();
+            	s_password = tv_password.getText().toString();
+            	s_password2 = tv_password2.getText().toString();
             	
+            	String regex_number = "^(1\\-)?[0-9]{3}\\-?[0-9]{3}\\-?[0-9]{4}$";
+
+            		// Check if there is a name
+        		if (s_name.isEmpty())
+        		{
+        			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+					
+        			builder.setTitle("No Name").setMessage("Please enter a Name");
+					
+					builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+					
+						public void onClick(DialogInterface dialog, int id){}
+					});
+			
+					AlertDialog dialog = builder.create();
+			
+					dialog.show();        			
+        		}
+        			// Check if phone number if proper format
+        		else if (!s_number.matches(regex_number))
+        		{
+        			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+					
+        			builder.setTitle("Invalid Phone Number").setMessage("XXXXXXXXXX, 1-XXX-XXX-XXXX, or XXX-XXX-XXXX Format Only");
+					
+					builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+					
+						public void onClick(DialogInterface dialog, int id){}
+					});
+			
+					AlertDialog dialog = builder.create();
+			
+					dialog.show();
+        		}
+        			// Check if UCLA email
+        		else if (!(s_email.endsWith("@ucla.edu") || s_email.endsWith("@g.ucla.edu")))
+        		{
+        			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+					
+        			builder.setTitle("Invalid Email Address").setMessage("Please enter a correct UCLA Email address");
+					
+					builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+					
+						public void onClick(DialogInterface dialog, int id){}
+					});
+			
+					AlertDialog dialog = builder.create();
+			
+					dialog.show();
+        		}
+        		else {
+        				// Check if password is confirmed correctly
+        			if (s_password.equals(s_password2) && !s_password.isEmpty()){ 
+        				ParseUser new_user = new ParseUser();
+        				new_user.setUsername(s_email);
+        				new_user.setPassword(s_password);
+        				new_user.setEmail(s_email);
+        				new_user.put("name", s_name);
+        				new_user.put("number", s_number);
+            		            		
+        				new_user.signUpInBackground(new SignUpCallback() {
+        					@Override
+        					public void done(ParseException e){
+        						if (e == null)
+        						{
+        							Intent intent = new Intent(context, Home.class);
+        							startActivity(intent);
+        						}
+        						else
+        						{
+        							AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        							
+        							builder.setTitle("Parse Input Failed");
+           						
+        							builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+           						
+        								public void onClick(DialogInterface dialog, int id){}
+        							});
+            				
+        							AlertDialog dialog = builder.create();
+            				
+        							dialog.show();
+        						}
+        					}
+        				});
+        			}
+        			else
+        			{
+        				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        				builder.setTitle("Password Confirmation Failed").setMessage("Check your password and try again.");
+
+        				builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+        					public void onClick(DialogInterface dialog, int id){}
+        				});
+
+        				AlertDialog dialog = builder.create();
+
+        				dialog.show();
+        			}
+        		}
             }
 
         });

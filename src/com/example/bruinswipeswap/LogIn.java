@@ -39,13 +39,30 @@ public class LogIn extends Activity {
 				TextView tv_email = (TextView) findViewById(R.id.login_editText_email);
 				TextView tv_password = (TextView) findViewById(R.id.login_editText_password);
 				
-				// COMMENT THIS SECTION TO SKIP TESTING LOGIN
-				// /*
 				ParseUser.logInInBackground(tv_email.getText().toString(), tv_password.getText().toString(), new LogInCallback() {
 					public void done (ParseUser user, ParseException e) {
 						if (user != null) {
-							Intent intent = new Intent(context, Home.class);
-                            startActivity(intent);
+							
+							ParseUser CurrentUser = ParseUser.getCurrentUser();
+							if (CurrentUser.getBoolean("emailVerified") == true)
+							{
+								Intent intent = new Intent(context, Home.class);
+	                            startActivity(intent);							
+							}
+							else
+							{
+			                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+			                    builder.setTitle("Email Not Verified").setMessage("Please verify your email and try again.");
+
+			                    builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+			                    public void onClick(DialogInterface dialog, int id){}
+			                    });
+
+			                    AlertDialog dialog = builder.create();
+
+			                    dialog.show();								
+							}
 						}
 						else {
 		                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -62,14 +79,6 @@ public class LogIn extends Activity {
 						}
 					}
 				});
-				// */
-				
-				
-				// FOR DEBUGGING PURPOSES USE THIS FOR EASIER ACCESS
-				/*
-				Intent intent = new Intent(context, Home.class);
-                startActivity(intent);
-                */
 			}
 		});
 	}
