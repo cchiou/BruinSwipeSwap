@@ -24,6 +24,7 @@
     
     <!-- Log In -->
     <string name="register_account"><u>Register for an account</u></string>
+    <string name="help_login"><u>Login Helper</u></string>
     <string name="login_icon_desc">Bruin SwipeSwap Logo</string>
 
     <!-- Edit User -->
