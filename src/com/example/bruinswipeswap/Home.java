@@ -89,6 +89,7 @@ public class Home extends ActionBarActivity {
         setContentView(R.layout.activity_home);
         Button view_match = (Button) findViewById(R.id.view_match_button);
         view_match.setEnabled(false);
+        view_match.setVisibility(View.INVISIBLE);
         
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null){
@@ -220,18 +221,16 @@ public class Home extends ActionBarActivity {
             	//Now if true then display the View Matches button
             	if(found_match)
             	{
-            		//match_name = matcher.getName();
-            		//Log.d("TREVOR", "mname " + match_name);
-            		//match_number = matcher.getNumber();
-            		//Log.d("TREVOR", "mnumber " + match_number);
                     Button view_match = (Button) findViewById(R.id.view_match_button);
                     view_match.setEnabled(true);
+                    view_match.setVisibility(View.VISIBLE);
             	}
             	//Disable button
             	else
             	{
                     Button view_match = (Button) findViewById(R.id.view_match_button);
                     view_match.setEnabled(false);
+                    view_match.setVisibility(View.INVISIBLE);
                     
                     match_name = "unknown";
                     match_number = "unknown";

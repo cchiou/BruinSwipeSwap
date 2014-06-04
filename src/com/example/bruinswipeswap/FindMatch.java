@@ -18,7 +18,7 @@ public class FindMatch {
 	private List<ParseObject> offers;
 	private List<ParseObject> requests;
 	
-	//Constructor initialize found_match bool to false
+	//Constructor
 	public FindMatch()
 	{
 		Log.d("TREVOR", "initialize");
@@ -49,9 +49,7 @@ public class FindMatch {
 	
 		//Query all objects in offers by users other than me
 		ParseQuery<ParseObject> query_else = ParseQuery.getQuery("Offers");
-		Log.d("TREVOR", "hey");
 		query_else.whereNotEqualTo("userId", (String) ParseUser.getCurrentUser().getUsername());
-		Log.d("TREVOR", "hey2");
 		/*query_else.findInBackground(new FindCallback<ParseObject>() {
 		    public void done(List<ParseObject> offer_list, ParseException e) {
 		    	Log.d("TREVOR", "uhh good? bad?");
@@ -158,6 +156,8 @@ public class FindMatch {
 		//Iterate through my own requests/offers
 		for(int i = 0; i < my_list.size(); i++)
 		{
+			if(my_list.get(i).getString("userId") == null)
+				continue;
 			//Obtain the important matching parameters from my objects
 			int number_swipes = (Integer) my_list.get(i).getNumber("numSwipes");
 			Date my_time_begin = my_list.get(i).getDate("beginTime");
@@ -167,6 +167,8 @@ public class FindMatch {
 			//find any that match my parameters
 			for(int j = 0; j < others_list.size(); j++)
 			{
+				if(others_list.get(i).getString("userId") == null)
+					continue;
 				//I am requesting swipes
 				if(i_am_requesting)
 				{
@@ -218,6 +220,7 @@ public class FindMatch {
 	{
 		String username = matched.getString("userId");
 		Log.d("TREVOR", "userId " + username);
+		
 		ParseQuery query_user = ParseUser.getQuery();
 		query_user.whereEqualTo("username", username);
 		query_user.findInBackground(new FindCallback<ParseObject>() {
@@ -232,16 +235,5 @@ public class FindMatch {
 		        }
 		    }
 		});
-		
-		/*if(user_list == null)
-			Log.d("TREVOR", "didn't work");
-		Log.d("TREVOR", "name " + user_list.getString("name"));
-		
-		if(user_list != null)
-		{
-			Log.d("TREVOR", "good!");
-			match_name = user_list.getString("name");
-			match_number = user_list.getString("number");
-		}*/
 	}
 }

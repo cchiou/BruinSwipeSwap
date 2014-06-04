@@ -84,7 +84,7 @@ public class OfferSwipe extends Activity  {
 			public void onClick(View v) {
 				TimePicker timepicker = (TimePicker) findViewById(R.id.timePicker1);
 				Calendar c1 = Calendar.getInstance();
-				c1.set(Calendar.HOUR_OF_DAY, timepicker.getCurrentHour()-7);
+				c1.set(Calendar.HOUR_OF_DAY, timepicker.getCurrentHour());
 				c1.set(Calendar.MINUTE, timepicker.getCurrentMinute());
 				Date time1 = c1.getTime();
 				int hour = timepicker.getCurrentHour();
@@ -95,7 +95,7 @@ public class OfferSwipe extends Activity  {
 				
 				TimePicker timepicker2 = (TimePicker) findViewById(R.id.timePicker2);
 				Calendar c2 = Calendar.getInstance();
-				c2.set(Calendar.HOUR_OF_DAY, timepicker2.getCurrentHour()-7);
+				c2.set(Calendar.HOUR_OF_DAY, timepicker2.getCurrentHour());
 				c2.set(Calendar.MINUTE, timepicker2.getCurrentMinute());
 				Date time2 = c2.getTime();
 				int hour2 = timepicker2.getCurrentHour();
