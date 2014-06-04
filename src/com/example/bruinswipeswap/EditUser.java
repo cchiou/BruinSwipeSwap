@@ -22,14 +22,16 @@ public class EditUser extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edituser);
         
-        if (getIntent() != null && getIntent().getExtras() != null) {
-        	 String m_name = getIntent().getExtras().getString("UPDATE_KEY_NAME");
-        	 String m_number = getIntent().getExtras().getString("UPDATE_KEY_NUMBER");
-        	 TextView tv_name = (TextView) findViewById(R.id.edituser_editText_name);
-        	 TextView tv_number = (TextView) findViewById(R.id.edituser_editText_number);
-        	 tv_name.setText(m_name);
-        	 tv_number.setText(m_number);
-         }
+        ParseUser usr = ParseUser.getCurrentUser();
+        if (usr != null)
+        {
+        	String m_name = usr.get("name").toString();
+        	String m_number = usr.get("number").toString();
+        	TextView tv_name = (TextView) findViewById(R.id.edituser_editText_name);
+        	TextView tv_number = (TextView) findViewById(R.id.edituser_editText_number);
+        	tv_name.setText(m_name);
+        	tv_number.setText(m_number);
+        }
                 
         addListenerOnButton();
     }
@@ -53,11 +55,11 @@ public class EditUser extends Activity {
                 TextView tv_number = (TextView) findViewById(R.id.edituser_editText_number);
                 String s_number = tv_number.getText().toString();
 
-                String regex_number = "^(1\\-)?[0-9]{3}\\-?[0-9]{3}\\-?[0-9]{4}$";
+                String regex_number = "^[0-9]{10}?";
                 if (!s_number.matches(regex_number)) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-                    builder.setTitle("Invalid Phone Number").setMessage("XXXXXXXXXX, 1-XXX-XXX-XXXX, or XXX-XXX-XXXX Format Only");
+                    builder.setTitle("Invalid Phone Number").setMessage("XXXXXXXXXX Format Only");
 
                     builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id){}

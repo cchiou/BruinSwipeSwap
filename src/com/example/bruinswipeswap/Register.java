@@ -47,7 +47,7 @@ public class Register extends Activity {
             	s_password = tv_password.getText().toString();
             	s_password2 = tv_password2.getText().toString();
             	
-            	String regex_number = "^(1\\-)?[0-9]{3}\\-?[0-9]{3}\\-?[0-9]{4}$";
+            	String regex_number = "^[0-9]{10}$";
 
             		// Check if there is a name
         		if (s_name.isEmpty())
@@ -70,7 +70,7 @@ public class Register extends Activity {
         		{
         			AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					
-        			builder.setTitle("Invalid Phone Number").setMessage("XXXXXXXXXX, 1-XXX-XXX-XXXX, or XXX-XXX-XXXX Format Only");
+        			builder.setTitle("Invalid Phone Number").setMessage("XXXXXXXXXX Format Only");
 					
 					builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
 					
