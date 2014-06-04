@@ -1,5 +1,8 @@
 package com.example.bruinswipeswap;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -8,22 +11,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.support.v7.app.ActionBarActivity;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 
 public class Home extends ActionBarActivity {
 	private static Context context;
@@ -31,6 +34,53 @@ public class Home extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        //deletes offers/requests at the end of the day
+        ParseQuery<ParseObject> requests = ParseQuery.getQuery("Requests");
+		requests.findInBackground(new FindCallback<ParseObject>() {
+		
+	        @Override
+	        public void done(List<ParseObject> objects, ParseException e) {
+	            if (e == null) {
+	            	Calendar c = Calendar.getInstance();
+	            	if(objects.size()>0){
+		            	Date today = (Date)objects.get(0).get("endTime");
+		            	Date d = c.getTime();
+		            	if(today.after(d)){
+			                for(int i =0; i < objects.size();i++)
+			                	objects.get(i).deleteInBackground();
+		                
+		            	}
+	            	}
+	            	
+	            } else {
+	                // TODO: handle query failure
+	            }
+
+	        }
+		}); 
+		ParseQuery<ParseObject> offers = ParseQuery.getQuery("Offers");
+		offers.findInBackground(new FindCallback<ParseObject>() {
+		
+	        @Override
+	        public void done(List<ParseObject> objects, ParseException e) {
+	            if (e == null) {
+	            	Calendar c = Calendar.getInstance();
+	            	if(objects.size()>0){
+		            	Date today = (Date)objects.get(0).get("endTime");
+		            	Date d = c.getTime();
+		            	if(today.after(d)){
+		            		for(int i =0; i < objects.size();i++)
+		            			objects.get(i).deleteInBackground();
+		            	}
+	            	}
+	            } else {
+	                // TODO: handle query failure
+	            }
+
+	        }
+		}); 
+		
         Home.context = this;
         setContentView(R.layout.activity_home);
         ParseUser currentUser = ParseUser.getCurrentUser();
@@ -135,7 +185,7 @@ public class Home extends ActionBarActivity {
     	    MenuInflater inflater = getMenuInflater();
     	    inflater.inflate(R.menu.actions, menu);
     	    return super.onCreateOptionsMenu(menu);
-    }
+    } 
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

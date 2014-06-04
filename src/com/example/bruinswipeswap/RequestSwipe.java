@@ -18,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.NumberPicker;
 import android.widget.TimePicker;
 
+
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -75,6 +76,10 @@ public class RequestSwipe extends Activity {
  
 			@Override
 			public void onClick(View v) {
+				Calendar c = Calendar.getInstance();
+				int currentHour = c.get(Calendar.HOUR);
+				int currentMinute = c.get(Calendar.MINUTE);
+				
 				TimePicker timepicker = (TimePicker) findViewById(R.id.timePicker1);
 				Calendar c1 = Calendar.getInstance();
 				c1.set(Calendar.HOUR_OF_DAY, timepicker.getCurrentHour()-7);
@@ -137,7 +142,7 @@ public class RequestSwipe extends Activity {
 				     .show();
 				}
 				
-				else if(from_time > until_time && anytimeToday ==false)
+				else if((hour > hour2 && anytimeToday ==false) || (hour == hour2 && minute > minute2) )
 				{
 					new AlertDialog.Builder(context).setTitle("Time Error")
 				    .setMessage("Please select a valid time range!")
