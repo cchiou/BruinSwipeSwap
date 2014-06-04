@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,12 +31,15 @@ import com.parse.ParseUser;
 
 public class Home extends ActionBarActivity {
 	private static Context context;
+	FindMatch matcher;
+	private String match_name;
+	private String match_number;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        //deletes offers/requests at the end of the day
+       /* //deletes offers/requests at the end of the day
         ParseQuery<ParseObject> requests = ParseQuery.getQuery("Requests");
 		requests.findInBackground(new FindCallback<ParseObject>() {
 		
@@ -79,10 +83,13 @@ public class Home extends ActionBarActivity {
 	            }
 
 	        }
-		}); 
-		
+		}); */
+
         Home.context = this;
         setContentView(R.layout.activity_home);
+        Button view_match = (Button) findViewById(R.id.view_match_button);
+        view_match.setEnabled(false);
+        
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null){
         	String m_name = currentUser.get("name").toString();
@@ -185,7 +192,7 @@ public class Home extends ActionBarActivity {
     	    MenuInflater inflater = getMenuInflater();
     	    inflater.inflate(R.menu.actions, menu);
     	    return super.onCreateOptionsMenu(menu);
-    } 
+    }
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -206,9 +213,32 @@ public class Home extends ActionBarActivity {
             	intent.putExtras(b);
                 startActivity(intent);
                 
-            case R.id.action_refresh:
-                // TODO: SEARCH FOR MATCHES
-                return true;
+            case R.id.action_refresh:            	
+            	matcher = new FindMatch();
+            	boolean found_match = matcher.findMatchEitherWay();
+            	
+            	//Now if true then display the View Matches button
+            	if(found_match)
+            	{
+            		//match_name = matcher.getName();
+            		//Log.d("TREVOR", "mname " + match_name);
+            		//match_number = matcher.getNumber();
+            		//Log.d("TREVOR", "mnumber " + match_number);
+                    Button view_match = (Button) findViewById(R.id.view_match_button);
+                    view_match.setEnabled(true);
+            	}
+            	//Disable button
+            	else
+            	{
+                    Button view_match = (Button) findViewById(R.id.view_match_button);
+                    view_match.setEnabled(false);
+                    
+                    match_name = "unknown";
+                    match_number = "unknown";
+            	}
+            	
+            	return true;
+                
             case R.id.action_logout:
             	new AlertDialog.Builder(context).setTitle("Log out")
         	    .setMessage("Are you sure you want to exit?")
@@ -306,6 +336,37 @@ public class Home extends ActionBarActivity {
  
 			    Intent intent = new Intent(context, RequestSwipe.class);
                             startActivity(intent);   
+			}
+		});
+		
+		Button view_match_button = (Button) findViewById(R.id.view_match_button);
+		view_match_button.setOnClickListener(new OnClickListener() {
+ 
+			@Override
+			public void onClick(View v) {
+				
+				if(matcher.getName() == null)
+				{
+					match_name = "unknown";
+					match_number = "unknown";
+				}
+					
+				match_name = matcher.getName();
+				match_number = matcher.getNumber();
+				
+				//Get name and number of matched user and display
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                builder.setTitle("Match Details").setMessage("Name: " + match_name + 
+                											"\nNumber: " + match_number);
+
+                builder.setNegativeButton("Thanks", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id){}
+                });
+
+                AlertDialog dialog = builder.create();
+
+                dialog.show();				
 			}
 		});
 	}
