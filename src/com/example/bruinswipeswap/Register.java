@@ -1,8 +1,6 @@
 package com.example.bruinswipeswap;
 
-import java.util.List;
-
-import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -58,15 +56,12 @@ public class Register extends Activity {
         		{
         			AlertDialog.Builder builder = new AlertDialog.Builder(context);
 					
-        			builder.setTitle("No Name").setMessage("Please enter a Name");
-					
-					builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-					
-						public void onClick(DialogInterface dialog, int id){}
-					});
+        			builder.setTitle("No Name").setMessage("Please enter a Name")
+						.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id){}
+						});
 			
 					AlertDialog dialog = builder.create();
-			
 					dialog.show();        			
         		}
     				// Check if phone number if proper format
@@ -74,15 +69,13 @@ public class Register extends Activity {
         		{
         			AlertDialog.Builder builder = new AlertDialog.Builder(context);
         			
-        			builder.setTitle("Invalid Phone Number").setMessage("XXXXXXXXXX Format Only");
-        			
-        			builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-				
-        				public void onClick(DialogInterface dialog, int id){}
-        			});
+        			builder.setTitle("Invalid Phone Number")
+        				.setMessage("XXXXXXXXXX Format Only")
+        				.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+				    		public void onClick(DialogInterface dialog, int id){}
+        				});
 		
         			AlertDialog dialog = builder.create();
-		
         			dialog.show();
         		}
         			// Check if UCLA email
@@ -90,91 +83,85 @@ public class Register extends Activity {
         		{
         			AlertDialog.Builder builder = new AlertDialog.Builder(context);
 				
-        			builder.setTitle("Invalid Email Address").setMessage("Please enter a correct UCLA Email address");
-				
-        			builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-				
-        				public void onClick(DialogInterface dialog, int id){}
-        			});
+        			builder.setTitle("Invalid Email Address")
+        				.setMessage("Please enter a correct UCLA Email address")
+        				.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+        					public void onClick(DialogInterface dialog, int id){}
+        				});
 		
         			AlertDialog dialog = builder.create();
-		
         			dialog.show();
         		}
         		else
         		{
         			ParseQuery<ParseUser> query = ParseUser.getQuery();
         			query.whereEqualTo("username", s_email);
-        			query.findInBackground(new FindCallback<ParseUser>() {
-        				public void done (List<ParseUser> objects, ParseException e) {
+        			query.getFirstInBackground(new GetCallback<ParseUser>() {
+        				public void done (ParseUser user, ParseException e) {
         					if (e == null)
         					{
-        						AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        						if (user == null)
+        						{
+        							AlertDialog.Builder builder = new AlertDialog.Builder(context);
         						
-        						builder.setTitle("Account Already Exists")
-        							.setMessage("This email already exists in our database.");
-        					
-        						builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-        					
-        							public void onClick(DialogInterface dialog, int id){}
-        						});
+        							builder.setTitle("Account Already Exists")
+        								.setMessage("This email already exists in our database.")
+        								.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+        									public void onClick(DialogInterface dialog, int id){}
+        								});
         			
-        						AlertDialog dialog = builder.create();
-        			
-        						dialog.show();  
-        					}
-        					else
-        					{	
+        							AlertDialog dialog = builder.create();
+        							dialog.show();  
+        						}
+        						else
+        						{
         							// Check if password is confirmed correctly
-                    			if (s_password.equals(s_password2) && !s_password.isEmpty()){ 
-                    				ParseUser new_user = new ParseUser();
-                    				new_user.setUsername(s_email);
-                    				new_user.setPassword(s_password);
-                    				new_user.setEmail(s_email);
-                    				new_user.put("name", s_name);
-                    				new_user.put("number", s_number);
-                        		            		
-                    				new_user.signUpInBackground(new SignUpCallback() {
-                    					@Override
-                    					public void done(ParseException e){
-                    						if (e == null)
-                    						{
-                    							Intent intent = new Intent(context, Home.class);
-                    							startActivity(intent);
-                    						}
-                    						else
-                    						{
-                    							AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    							
-                    							builder.setTitle("Parse Input Failed");
-                       						
-                    							builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                       						
-                    								public void onClick(DialogInterface dialog, int id){}
-                    							});
-                        				
-                    							AlertDialog dialog = builder.create();
-                        				
-                    							dialog.show();
-                    						}
-                    					}
-                    				});
-                    			}
-                    			else
-                    			{
-                    				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        			if (s_password.equals(s_password2) && !s_password.isEmpty()){ 
+                        				ParseUser new_user = new ParseUser();
+                        				new_user.setUsername(s_email);
+                        				new_user.setPassword(s_password);
+                        				new_user.setEmail(s_email);
+                        				new_user.put("name", s_name);
+                        				new_user.put("number", s_number);
+                            		            		
+                        				new_user.signUpInBackground(new SignUpCallback() {
+                        					@Override
+                        					public void done(ParseException e){
+                        						if (e == null)
+                        						{
+                        							Intent intent = new Intent(context, Home.class);
+                        							startActivity(intent);
+                        						}
+                        						else
+                        						{
+                        							AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        							
+                        							builder.setTitle("Parse Input Failed")
+                        								.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                        									public void onClick(DialogInterface dialog, int id){}
+                        								});
+                            				
+                        							AlertDialog dialog = builder.create();
+                        							dialog.show();
+                        						}
+                        					}
+                        				});
+                        			}
+                        			else
+                        			{
+                        				AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-                    				builder.setTitle("Password Confirmation Failed").setMessage("Check your password and try again.");
+                        				builder.setTitle("Password Confirmation Failed")
+                        					.setMessage("Check your password and try again.")
+                        					.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                        						public void onClick(DialogInterface dialog, int id){}
+                        					});
 
-                    				builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                    					public void onClick(DialogInterface dialog, int id){}
-                    				});
-
-                    				AlertDialog dialog = builder.create();
-
-                    				dialog.show();
-                    			}
-                    		}
+                        				AlertDialog dialog = builder.create();
+                        				dialog.show();
+                        			}
+        						}
+        					}
             			}
             		});
             	}
