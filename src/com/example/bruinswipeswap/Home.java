@@ -2,7 +2,6 @@ package com.example.bruinswipeswap;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -12,7 +11,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
+import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -39,7 +38,7 @@ public class Home extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-       /* //deletes offers/requests at the end of the day
+        //deletes offers/requests at the end of the day
         ParseQuery<ParseObject> requests = ParseQuery.getQuery("Requests");
 		requests.findInBackground(new FindCallback<ParseObject>() {
 		
@@ -49,8 +48,11 @@ public class Home extends ActionBarActivity {
 	            	Calendar c = Calendar.getInstance();
 	            	if(objects.size()>0){
 		            	Date today = (Date)objects.get(0).get("endTime");
+		            	Calendar c2 = Calendar.getInstance();
+		            	c2.setTime(today);
 		            	Date d = c.getTime();
-		            	if(today.after(d)){
+		            	int dayDiff = c.get(Calendar.DAY_OF_MONTH) - c2.get(Calendar.DAY_OF_MONTH);
+		            	if(dayDiff != 0){
 			                for(int i =0; i < objects.size();i++)
 			                	objects.get(i).deleteInBackground();
 		                
@@ -71,11 +73,15 @@ public class Home extends ActionBarActivity {
 	            if (e == null) {
 	            	Calendar c = Calendar.getInstance();
 	            	if(objects.size()>0){
-		            	Date today = (Date)objects.get(0).get("endTime");
+	            		Date today = (Date)objects.get(0).get("endTime");
+		            	Calendar c2 = Calendar.getInstance();
+		            	c2.setTime(today);
 		            	Date d = c.getTime();
-		            	if(today.after(d)){
-		            		for(int i =0; i < objects.size();i++)
-		            			objects.get(i).deleteInBackground();
+		            	int dayDiff = c.get(Calendar.DAY_OF_MONTH) - c2.get(Calendar.DAY_OF_MONTH);
+		            	if(dayDiff != 0){
+			                for(int i =0; i < objects.size();i++)
+			                	objects.get(i).deleteInBackground();
+		                
 		            	}
 	            	}
 	            } else {
@@ -83,7 +89,7 @@ public class Home extends ActionBarActivity {
 	            }
 
 	        }
-		}); */
+		}); 
 
         Home.context = this;
         setContentView(R.layout.activity_home);
